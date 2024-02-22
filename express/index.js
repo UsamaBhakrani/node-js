@@ -5,15 +5,19 @@ const express = require("express");
 const app = express();
 const helmet = require("helmet");
 
-console.log(`NODE_ENV:${process.env.NODE_ENV}`);
-console.log(`APP_ENV:${app.get("env")}`);
+// console.log(`NODE_ENV:${process.env.NODE_ENV}`);
+// console.log(`APP_ENV:${app.get("env")}`);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(logger);
 app.use(helmet());
-app.use(morgan("tiny"));
+
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  console.log("Morgan Enabled");
+}
 
 const courses = [
   { id: 1, name: "C++" },
