@@ -1,3 +1,4 @@
+const config = require("config");
 const Joi = require("joi");
 const morgan = require("morgan");
 const logger = require("./logger");
@@ -7,6 +8,10 @@ const helmet = require("helmet");
 
 // console.log(`NODE_ENV:${process.env.NODE_ENV}`);
 // console.log(`APP_ENV:${app.get("env")}`);
+
+// configuration
+
+console.log(config.get('name'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
