@@ -30,10 +30,12 @@ const getCourses = async () => {
   const findDoc = await Course
     //   .find({ author: "Usama", isPublished: true })
     .find()
-    .or([{ author: "Usama" }, { isPublished: false }])
-    .limit(2)
+    .or([{ author: "Usama" }, { isPublished: true }])
+    .skip()
+    .limit(10)
     .sort({ name: 1 })
-    .select({ name: 1, tags: 1 });
+    // .select({ name: 1, tags: 1 });
+    .countDocuments();
   console.log(findDoc);
 };
 
