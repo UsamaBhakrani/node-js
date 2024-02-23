@@ -1,3 +1,5 @@
+const startupDebugger = require("debug")("app:startup");
+const dbDebugger = require("debug")("app:db");
 const config = require("config");
 const Joi = require("joi");
 const morgan = require("morgan");
@@ -6,12 +8,17 @@ const express = require("express");
 const app = express();
 const helmet = require("helmet");
 
+app.set("view engine", "pug");
+app.set("views", "./views");
+
 // console.log(`NODE_ENV:${process.env.NODE_ENV}`);
 // console.log(`APP_ENV:${app.get("env")}`);
 
 // configuration
 
-console.log(config.get('name'));
+console.log(config.get("name"));
+console.log(config.get("mail.host"));
+console.log(config.get("mail.password"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,10 +26,13 @@ app.use(express.static("public"));
 app.use(logger);
 app.use(helmet());
 
-if (app.get("env") === "development") {
+if (app.get("env") === "production") {
   app.use(morgan("tiny"));
-  console.log("Morgan Enabled");
+  startupDebugger("Morgan Enabled");
 }
+
+// db Work
+dbDebugger("Connected to the Database");
 
 const courses = [
   { id: 1, name: "C++" },
@@ -32,7 +42,7 @@ const courses = [
 
 // Get Request
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.render("index", { title: "My Express App", message: "Hello" });
 });
 
 app.get("/api/courses", (req, res) => {
