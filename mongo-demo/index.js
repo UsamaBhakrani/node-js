@@ -17,9 +17,9 @@ const Course = mongoose.model("Course", courseSchema);
 
 const createCourse = async () => {
   const course = new Course({
-    name: "SQL Course",
+    name: "Postgres Course",
     author: "Usama",
-    tags: ["SQL", "backend"],
+    tags: ["SQL", "backend", "postgres"],
     isPublished: true,
   });
   const result = await course.save();
@@ -41,14 +41,14 @@ const getCourses = async () => {
   const pageNumber = 2;
   const pageSize = 10;
 
-  const findDoc = await Course.find()
-    .or([{ author: "Usama" }, { isPublished: true }])
-    .skip((pageNumber - 1) * pageSize)
-    .limit(pageSize)
-    .sort({ name: 1 });
-  // .select({ name: 1, tags: 1 });
-  // .countDocuments();
-  console.log(findDoc);
+  //   const findDoc = await Course.find()
+  //     .or([{ author: "Usama" }, { isPublished: true }])
+  //     .skip((pageNumber - 1) * pageSize)
+  //     .limit(pageSize)
+  //     .sort({ name: 1 });
+  //   // .select({ name: 1, tags: 1 });
+  //   // .countDocuments();
+  //   console.log(findDoc);
 };
 
-getCourses();
+// getCourses();
