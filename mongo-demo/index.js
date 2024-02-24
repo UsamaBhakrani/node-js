@@ -27,15 +27,27 @@ const createCourse = async () => {
 };
 
 const getCourses = async () => {
-  const findDoc = await Course
-    //   .find({ author: "Usama", isPublished: true })
-    .find()
+  // starts with
+  // regexp  .find({ author: /^Usama/ })
+
+  // ends with
+  // regexp  .find({ author: /Usama$/i })
+
+  // contains
+  // regexp  .find({ author: /.*Usama.*/i })
+
+  //   .find({ author: "Usama", isPublished: true })
+
+  const pageNumber = 2;
+  const pageSize = 10;
+
+  const findDoc = await Course.find()
     .or([{ author: "Usama" }, { isPublished: true }])
-    .skip()
-    .limit(10)
-    .sort({ name: 1 })
-    // .select({ name: 1, tags: 1 });
-    .countDocuments();
+    .skip((pageNumber - 1) * pageSize)
+    .limit(pageSize)
+    .sort({ name: 1 });
+  // .select({ name: 1, tags: 1 });
+  // .countDocuments();
   console.log(findDoc);
 };
 
