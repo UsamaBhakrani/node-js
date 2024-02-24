@@ -6,7 +6,7 @@ mongoose
   .catch((err) => console.error(err));
 
 const courseSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, minlength: 3 },
   author: String,
   tags: [String],
   date: { type: Date, default: Date.now },
@@ -23,10 +23,10 @@ const Course = mongoose.model("Course", courseSchema);
 
 const createCourse = async () => {
   const course = new Course({
-    name: "C++ Course",
+    // name: "C++ Course",
     author: "Usama",
     tags: ["backend", "frontend", "C++"],
-    isPublished: false,
+    isPublished: true,
     // price: 20,
   });
   try {
